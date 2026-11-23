@@ -409,7 +409,7 @@ require('targetEnvironment(simulator)' in reason and '#available(iOS 26.0, *)' i
         'JIT rules mirror the app: the built-in helper needs a device, iOS 26 and, inside LiveContainer, its proven Helper Process Support (JITBuiltInHost.swift)')
 lc_look = block(host, 'private static func look() -> BCDLCHelper')
 require(lc_look[lc_look.index('{') + 1:].lstrip().startswith('guard getenv("LC_HOME_PATH") != nil else { return .notAvailable }')
-        and 'probe == "LCGuestExtension" && prepared' in lc_look and 'static let state: BCDLCHelper = look()' in host,
+        and '(probe == "LCGuestExtension" || probe == "EXConcreteExtension") && prepared' in lc_look and 'static let state: BCDLCHelper = look()' in host,
         'LiveContainer: outside it the look returns at once; ready needs LiveContainer\'s own extension object and its install-time preparation')
 pairing = (app / 'JITPairing.swift').read_text()
 network = (app / 'JITNetwork.swift').read_text()

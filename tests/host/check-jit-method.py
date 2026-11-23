@@ -234,8 +234,8 @@ require(body.startswith('guard getenv("LC_HOME_PATH") != nil else { return .notA
 require("if !multitask, switchOn == true, let url = helperURL" in look and look.count("factory.extension(withIdentifier:") == 1
         and look.index("if !multitask, switchOn == true") < look.index("factory.extension(withIdentifier:"),
         "LiveContainer helper: the extension probe runs only with Helper Process Support switched on")
-require('else if probe == "LCGuestExtension" && prepared { state = .ready }' in look and look.count("state = .ready") == 1,
-        "LiveContainer helper: ready only with LiveContainer's own extension object and its install-time preparation")
+require('else if (probe == "LCGuestExtension" || probe == "EXConcreteExtension") && prepared { state = .ready }' in look and look.count("state = .ready") == 1,
+        "LiveContainer helper: ready only with the extension object LiveContainer hands back (v1 LCGuestExtension or v2 EXConcreteExtension) and its install-time preparation")
 reason_body = function(host, "static var unavailableReason: String?")
 require('if getenv("LC_HOME_PATH") != nil, LiveContainerHelper.state != .ready {' in reason_body,
         "built-in JIT: the LiveContainer gate opens only for a proven ready helper")

@@ -272,7 +272,11 @@ enum LiveContainerHelper {
         }
         let state: BCDLCHelper
         if multitask { state = .multitask }
-        else if probe == "LCGuestExtension" && prepared { state = .ready }
+        // tsuzu fork patch (2026-11-23): LiveContainer's Helper Process Support v2 (2026-11-15,
+        // in the 3.8.14 nightly and later) hands the extension back through its PlugInKit hook
+        // instead of the v1 NSExtension proxy, so the returned object is an EXConcreteExtension.
+        // Accept it as ready too; with no hook at all the lookup returns nothing ("none").
+        else if (probe == "LCGuestExtension" || probe == "EXConcreteExtension") && prepared { state = .ready }
         else if switchOn == nil { state = .tooOld }
         else if switchOn == false { state = .switchOff }
         else if !prepared { state = .notPrepared }

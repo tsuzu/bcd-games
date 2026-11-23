@@ -21,7 +21,7 @@ concurrency:
 jobs:
   build:
     # madeira-bcd: runs only in the owner's repository; a fork's run is skipped.
-    if: github.repository == 'thebcd69/madeira-bcd'
+    if: github.repository == 'thebcd69/madeira-bcd' || github.repository == 'tsuzu/bcd-games'
     runs-on: macos-15
     # contents: write only so the token can see DRAFT releases, which is where
     # the Metal Shader Converter installer is kept (drafts are not public).
@@ -6248,11 +6248,15 @@ jobs:
       # anyone; the only copy of a build is the signed IPA in the owner's
       # private R2 bucket (the OTA step above). If that step did not succeed,
       # the build fails here instead of keeping the IPA somewhere public.
-      - name: Check the IPA reached the private bucket
-        if: steps.ota.outcome != 'success'
-        run: |
-          echo "::error::OTA signing/upload did not succeed: this build's IPA was not kept anywhere (no GitHub artifact by design)"
-          exit 1
+      # tsuzu fork patch (2026-11-23): no private bucket here; keep the unsigned
+      # IPAs as a build artifact instead of failing the run at the owner's gate.
+      - name: Upload unsigned IPAs (fork)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unsigned-ipas
+          path: "build-out/*-unsigned.ipa"
+          if-no-files-found: warn
 
       # Full logs as an artifact -- the annotations above are truncated, and
       # digging them out of the raw job log is painful.

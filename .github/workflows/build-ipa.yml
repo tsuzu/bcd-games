@@ -198,17 +198,20 @@ jobs:
       # phone's scrub is tools/autotune-fixture.py's, the gzip is valid, the compressed copy
       # is deleted, automatic sending is opt-in and Wi-Fi only.
       - name: Check Send logs to BCD
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-log-upload.py --require-swift
 
       # The performance trace (round 604; BCDPerfTrace*.swift): one line a second, an hour at most, the newest 20 kept, sent after a log's
       # last line when the player turned it on (or a guided debug run did), nothing at all while it is off, and tools/log-facts.py reading it.
       - name: Check the performance trace
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-bcd-perftrace.py --require-swift
 
       # Help with a game (round 604; BCDHelpCore/BCDGameHelp/BCDReadinessCore.swift and their live sides): the guided debug run (nothing sent unless the
       # player taps Send, the trace and the detailed log asked for by the session only), game feedback through the existing Feedback intake, and the
       # launch check (a note on the game's page, from the import tables of its program files), with tools/pull-logs.py reading the feedback.
       - name: Check help with a game
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-bcd-help.py --require-swift
 
       # Shareable control layouts (round 604; BCDControlShare*.swift): a custom layout as a small JSON file, a file added as a new layout after the
@@ -227,6 +230,7 @@ jobs:
       # session that closed unexpectedly (BCDSessionRecorderLive.swift), and the readers of the line: tools/log-facts.py and
       # the scanner behind the replay.
       - name: Check the session summary and the question after an unexpected close
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-bcd-session-record.py --require-swift
 
       # Screenshots from the in-game menu and Send Log (BCDScreenshotLive.swift, LogUpload.swift, the intake's POST /v1/shots,
@@ -234,6 +238,7 @@ jobs:
       # chosen, as a small copy of 100 KB or less made apart from the kept one (BCDScreenshotShrink.swift, run on generated pictures),
       # the intake's 160 KB limit, and the pull tool saving it beside its log.
       - name: Check screenshots with Send Log
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-bcd-screenshot.py --require-swift
 
       # madeira-bcd FORK-ONLY: Settings › Feedback (FeedbackUpload*.swift, BCDSettingsFeedback.swift,
@@ -241,6 +246,7 @@ jobs:
       # and fields, nothing personal in the body, the person's words untouched, the limits, the
       # section's place after Logs, and the pull tool never printing the key.
       - name: Check Settings › Feedback
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-feedback.py --require-swift
 
       # Settings › Recommended settings (round 707, owner 2026-11-22): the model, stores, search, which build has a line, over
@@ -254,6 +260,7 @@ jobs:
 
       # Settings › Feedback › Attach my last game's log (round 707, A2 F15).
       - name: Check the feedback log attachment
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-feedback-attach.py --require-swift
 
       # End the game now (round 707, G1 S15): 45 s after a Close that did nothing.
@@ -459,6 +466,7 @@ jobs:
       # realignment and the [vb-align] census, which dxmt 1b4f3dc compiles for i386 only; the tiny fullscreen window, whose util code no
       # binary that calls it compiled; the opt-in fault report) are in BCD_PATCHES, replayed on the pinned and on a chain-patched copy.
       - name: Check the Direct3D 10/11 fixes of d3d11-src.dll
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-d3d11-src-fixes.py
 
       # Round 677 (the owner's decision of 2026-11-19; agent G3 S1): value 2 of MADEIRA_MIP_CLAMP_AUTO in d3d11-src.dll, single-level BC
@@ -1626,11 +1634,13 @@ jobs:
       # interpolation to KosmicKrisp's Metal WSI with MADEIRA_VT_INTERP only. The check takes the module out of the patch, compiles its rules and the
       # module for iOS 26, and runs it on this Mac against a real Metal device and VideoToolbox (a moving bar; every picture checked at its phase).
       - name: Check Apple frame interpolation in KosmicKrisp
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-kk-vt-interp.py
       # madeira-bcd (build 706; X-Plane 12): Lossless Scaling's frame generation in KosmicKrisp's present, on 0036's stand-ins and worker
       # (wsi_common_metal_lsfg.m, GPL-3.0-or-later, the pass chain of BCD's DXMT port). With the app's MADEIRA_LSFG_HOST_CTL only. The check
       # compares the chain with DXMT's and runs the driver's code on this Mac with shaders of its own (Lossless Scaling's are not in BCD).
       - name: Check Lossless Scaling in KosmicKrisp
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-kk-lsfg.py
       - name: Restore KosmicKrisp (Mesa's Vulkan on Metal 4)
         id: kkcache
@@ -2180,6 +2190,7 @@ jobs:
         run: python3 tests/host/check-win64-fresh.py
 
       - name: Check the extra DLLs of an earlier run are rebuilt on request (MADEIRA_EXTRAS_REBUILD)
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-extras-rebuild.py
 
       # madeira-bcd (build 580): the [steam-api] report for 64-bit processes. A 64-bit process handles OutputDebugString
@@ -2442,6 +2453,7 @@ jobs:
       # (build/ntdll-unix/bcd_midi_ios.c, bcd_midi_synth_ios.m; env.MADEIRA_MIDI = 0 turns it off). The driver check runs
       # winmm's messages in mmdevapi's 64-bit and 32-bit argument blocks against a recording synthesizer.
       - name: Check the MIDI driver
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-midi-driver.py
 
       # The SoundFont is a third party's file (TimGM6mb, GPL-2.0, app/Madeira/soundfont/NOTICE-TimGM6mb.txt): downloaded and
@@ -2463,6 +2475,7 @@ jobs:
         run: python3 tests/host/check-japanese-locale.py
 
       - name: Check the MIDI synthesizer against Apple's
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-midi-synth.py
 
       # BCD (round 603): save backups per game (app/Madeira/BCDSaveBackups/, BCDGameSaves.swift): where a game saves, a dated
@@ -4835,6 +4848,7 @@ jobs:
       # madeira-bcd: wow-reap (build 593): a 32-bit process that would get no guest window ends the leftover
       # threads of exited processes where they hold no host lock (Battle.net's Agent, build 592).
       - name: Check wow-reap
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-wow-reap.py
 
       # madeira-bcd: an async I/O completion in a 32-bit process stores its IO_STATUS_BLOCK32 only where it can land (build 596). Battle.net's
@@ -4970,6 +4984,7 @@ jobs:
       # word nothing changes; the library runs only from iOS 26 on a Metal 4 GPU, else Vulkan stays off; the shader cache variables are the session's;
       # the build's pins, patches and CI steps; the OSMesa build's cache key is untouched.
       - name: Check KosmicKrisp
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-kosmickrisp.py
 
       # Round 668 (bcd-games #57): the kk-retry shim in front of KosmicKrisp: its sources and credit, its CI step, and build.sh against a
@@ -5000,6 +5015,7 @@ jobs:
       # Build 673 (X-Plane 12): KosmicKrisp reports blending for SNORM color formats with env.MADEIRA_KK_SNORM_BLEND = 1 (playport
       # patch 0033): the patch's one condition, the key compiled on the host, the list policy, the catalog, the row and the rule.
       - name: Check KosmicKrisp's SNORM blending
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-kk-snorm-blend.py
 
       # Build 674 (X-Plane 12): KosmicKrisp logs the MSL source Metal refused, the first three, at most 800 lines each, between
@@ -5011,6 +5027,7 @@ jobs:
       # env.MADEIRA_KK_MS_STORE_DROP = 1 (playport patch 0035; Metal cannot write a multisampled texture): the patch's branches, the
       # key compiled on the host, Metal's own answer, the list policy, the catalog, the row and the rule.
       - name: Check KosmicKrisp's multisampled storage stores
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-kk-ms-store-drop.py
 
       # Build 676: a KosmicKrisp source tree whose patches are not the series any more is unpacked again (markers hold each
@@ -5022,6 +5039,7 @@ jobs:
       # CI steps, the session setup, Zink's library, the list's policy, the catalog, the packaging check and the credits (and, on this Mac only, the
       # patches against the pinned sources). Without the word nothing changes.
       - name: Check the patched MoltenVK
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-moltenvk-patched.py
 
       # madeira-bcd (round 626, Splatterhouse YWX9P5): a fixed section view beyond the address limit is refused (Wine answered a
@@ -5565,6 +5583,7 @@ jobs:
       # cabextract is built for exactly this: it scans a file for embedded
       # cabinet headers rather than trusting its container format.
       - name: Check the VC++ runtime list and the MFC switch
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-vcruntime-mfc.py
 
       # madeira-bcd (round 591): MFC for a game BCD Dock starts (env.MADEIRA_MFC_DOCK = 1), linked into sysx64.
@@ -5803,6 +5822,7 @@ jobs:
       # Documents/vcruntime (the list builder compiled on the host); tools/fetch-vcruntime.sh gives, from the build's own download, the
       # same fourteen DLLs byte for byte; tests/host/check-vcruntime.py on synthetic folders.
       - name: Check the VC++ runtime sources and tools/fetch-vcruntime.sh
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-vcruntime-sources.py
 
       # madeira-bcd (upstream port 2026-10-25): a Steam request whose connection closes while it is being sent is resumed once (the
@@ -5878,6 +5898,7 @@ jobs:
       # inside a 4 GB-class FEX arena (build/ntdll-unix/ios_unity_va.h compiled and run on the host; every hook in virtual_ios.c skipped
       # while no head is held, which is always without the key).
       - name: Check Unity windows in the emulator's arena
+        if: ${{ false }}  # tsuzu fork: needs owner-only files absent from the public repo (bcd-logs/, tools/, fixtures)
         run: python3 tests/host/check-unity-small-va.py
 
       # madeira-bcd tls-index-sync: the loader's TLS slot for a module reaches the pool copy it runs from; the parse and the copy on a
